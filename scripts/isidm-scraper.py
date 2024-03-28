@@ -88,34 +88,52 @@ def extract_references(list_items, soup, type_):
     return list_items
 
 type_list: RefTypes = {
-    "Conference Proceedings" : RefType(
-        Names= ["International Computer Music Conference"],
-        Gen_Case= "Proceedings"
-    ),
-        
-    "Journal Paper" : RefType(
-        Names= ["Contemporary Music Review", "Science", "ACM", "Scientific American", "Computer Music Journal"],
-        Gen_Case= "TBD"
-    ),
     "Book" : RefType(
-        Names= ["Prentice Hall", "MIT", "Presses de l'Université du Québec", "Music Processing"],
-        Gen_Case= "Press"
+        Names= ["Prentice Hall", "Presses de l'Université du Québec", "MIT Press"], #jnt: I removed "MIT" because it got many false positives like "Smith" and "Primitives"
+        Gen_Case= [" p."], #["Press"], there was a bug with the word "expression" or the name "Pressing", that has "press" inside, converting it to a book type
+        # Edge_Case = " # p."
+    ),
+    "Master Thesis" : RefType(
+        Names = ["Master Thesis"],
+        Gen_Case = ["TBD"]
+    ),
+    "PhD Thesis" : RefType(
+        Names = ["PhD Thesis"],
+        Gen_Case = ["TBD"]
+    ),
+    "Magazine" : RefType(
+        Names = ["Electronic Musician", "IEEE Spectrum", "Musicworks"],
+        Gen_Case = ["TBD"]
+    ),
+    # jnt: added conference and journals to the end so they would have precedence over books, which the search is worst defined
+    "Conference Proceedings" : RefType( 
+        Names= ["International Computer Music Conference", "Sound and Music Computing Conference", "Computer Music Modeling and Retrieval Conference", "Audio Engineering Society Convention", "Proceedings of Tangible and Embedded Interaction"],
+        Gen_Case= ["Proceeding", "Conference"]
+    ),  
+    "Journal Paper" : RefType(
+        Names= ["Contemporary Music Review", "ACM", "Scientific American", "Computer Music Journal", "Journal of New Music Research", "Organised Sound", "Musiktheorie", "Music Perception", "Contemporary Music Review", "Journal of Audio Engineering Society", "Computers and the Humanities", "Entertainment Computing", "Musicae Scientiae", "Autonomous Robots", "Journal of Interface", "Leonardo Music Journal", "Leonardo", "Journal of Pediatric Psychology", "IBM Systems Journal", "IEEE Robotics & Automation Magazine", "Ergonomics", "International Journal of Human-Computer Studies", "Dance Research Journal", "Performance Research", "Theatre Design and Technology", "ICME", "Journal of Computer Mediated-Communication", "IEEE Multimedia", "Design Studies"],
+        Gen_Case= ["TBD"]
     ),
     "Other" : RefType(
         Names= ["NIME", "VHS"],
-        Gen_Case= "TBD"
+        Gen_Case= ["TBD"]
     )
+    # TODO: classify book chapters
 }
 
 
 def ref_sorter(ref, type_list: RefTypes):
     t = "N/A"
     n = "N/A"
+    # jnt: changed to lower-case so the search isn't case-sensitive
+    ref_lower = ref.lower() 
     for type_, specs in type_list.items():
-        if specs["Gen_Case"] in ref:
-            t = type_
+        for case in specs["Gen_Case"]:
+            if case.lower() in ref_lower:
+                t = type_
+        # TODO: Add edge case check here
         for name in specs["Names"]:
-            if name in ref:
+            if name.lower() in ref_lower:
                 n = name
                 t = type_
     
