@@ -11,7 +11,7 @@ Nime papers, chapters and books published outside of the NIME Conference Proceed
 	volume = {1},
 	number = {3},
 	pages = {21-25},
-	error = {missing year in DavidsonHaptic}
+	year = {1976}
 }
 
 ```
@@ -23,6 +23,7 @@ D.&nbsp;Buchla.<span class="bibtex-protected">Lightning II MIDI Controller</span
 	author = {Buchla, D.},
 	title = {{Lightning II MIDI Controller}},
 	howpublished = {\url{http://www.buchla.com/}}
+	year = {1995}
 }
 
 ```
