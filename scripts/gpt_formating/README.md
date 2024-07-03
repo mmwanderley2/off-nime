@@ -1,6 +1,6 @@
 # Off-NIME ISIDM Papers
 Nime papers, chapters and books published outside of the NIME Conference Proceedings
-<body>Failed Refererence 
+<body>Failed Reference 
  
 
 ```
@@ -38,7 +38,7 @@ M.&nbsp;Hurney.<span class="bibtex-protected">Synthophone. The MIDI sax</span>.\
 
 ```
 
-Failed Refererence 
+Failed Reference 
  
 
 ```
